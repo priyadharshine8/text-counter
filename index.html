@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlimited Character Counter | Greenden</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 bg-cover bg-center bg-no-repeat relative" 
+      style="background-image: url('https://images.unsplash.com/photo-1470058869958-2a77a6171be3?auto=format&fit=crop&w=1920&q=80');">
+    
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+    <div class="relative bg-white/90 backdrop-blur-md p-8 md:p-12 rounded-[2.5rem] shadow-2xl w-full max-w-lg border border-white/20">
+        
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 bg-green-700 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-green-900/20">
+                <i class="fas fa-feather-pointed text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-3xl font-black text-gray-900 tracking-tight">Write to Us</h2>
+                <p class="text-green-700 font-bold text-xs uppercase tracking-widest">Unlimited Character Mode</p>
+            </div>
+        </div>
+
+        <textarea 
+            id="messageArea" 
+            class="w-full h-56 p-6 bg-white/50 border-2 border-stone-200 rounded-[1.5rem] outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/10 transition-all resize-none text-gray-800 text-lg placeholder-gray-400 shadow-inner"
+            placeholder="Tell us about your plant journey..."></textarea>
+
+        <div class="grid grid-cols-2 gap-4 mt-6">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+                <p class="text-[10px] font-black uppercase text-stone-400 tracking-tighter">Total Characters</p>
+                <p id="charTyped" class="text-3xl font-black text-green-700">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+                <p class="text-[10px] font-black uppercase text-stone-400 tracking-tighter">Estimated Words</p>
+                <p id="wordCount" class="text-3xl font-black text-stone-800">0</p>
+            </div>
+        </div>
+
+        <div class="mt-8 flex items-center justify-between text-xs font-bold text-stone-500">
+            <span class="flex items-center gap-2">
+                <span id="statusIcon" class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                System Live
+            </span>
+            <span id="readingTime">0 min read</span>
+        </div>
+    </div>
+
+    <script>
+        const textArea = document.getElementById('messageArea');
+        const charTyped = document.getElementById('charTyped');
+        const wordCount = document.getElementById('wordCount');
+        const readingTime = document.getElementById('readingTime');
+
+        textArea.addEventListener('input', () => {
+            const text = textArea.value;
+            
+            // Character Count
+            const length = text.length;
+            charTyped.innerText = length;
+
+            // Word Count Logic
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            wordCount.innerText = words.length;
+
+            // Reading Time (Average 200 words per minute)
+            const time = Math.ceil(words.length / 200);
+            readingTime.innerText = `${time} min read`;
+            
+            // Simple visual feedback when typing
+            if(length > 0) {
+                charTyped.classList.add('scale-110');
+                setTimeout(() => charTyped.classList.remove('scale-110'), 100);
+            }
+        });
+    </script>
+
+</body>
+</html>
